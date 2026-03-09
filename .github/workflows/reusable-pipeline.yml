@@ -1,0 +1,27 @@
+name: Pipeline Reutilizable Central
+
+on:
+  workflow_call: # Buscamos: Que este flujo sea la plantilla para otros repos
+
+jobs:
+  build-and-analyze:
+    runs-on: self-hosted # Buscamos: Que se ejecute en tu Debian (el que ya está Listening)
+    steps:
+      - name: 1. Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: 2. Compilar con Maven
+        run: mvn clean package -DskipTests
+
+      - name: 3. Analisis en SonarQube Local
+        # Sustituye TU_TOKEN por el que saques de http://localhost:9000
+        # Usamos host.docker.internal para llegar desde el contenedor Debian al Sonar del host
+        run: |
+          mvn sonar:sonar \
+          -Dsonar.projectKey=mi-proyecto-final \
+          -Dsonar.host.url=http://host.docker.internal:9000 \
+          -Dsonar.login=TU_TOKEN_DE_SONARQUBE_AQUI
+
+      - name: 4. Construir Imagen Docker
+        run: |
+          docker build -t app-final-curiosa:latest .
