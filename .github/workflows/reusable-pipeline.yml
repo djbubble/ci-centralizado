@@ -1,7 +1,10 @@
 name: Pipeline Reutilizable Central
 
 on:
-  workflow_call: # Buscamos: Que este flujo sea la plantilla para otros repos
+  workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true # Esto obliga a que el secreto esté presente
 
 jobs:
   build-and-analyze:
@@ -14,7 +17,6 @@ jobs:
         run: mvn clean package -DskipTests
 
       - name: 3. Analisis en SonarQube Local
-        # Sustituye TU_TOKEN por el que saques de http://localhost:9000
         # Usamos host.docker.internal para llegar desde el contenedor Debian al Sonar del host
         run: |
           mvn sonar:sonar \
