@@ -24,6 +24,6 @@ jobs:
           -Dsonar.host.url=http://host.docker.internal:9000 \
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
-      - name: 4. Construir Imagen Docker
+      - name: 4. Construir Imagen Docker  # Recordamos haber otorgado permisos al usuario que lanza el runner.
         run: |
           docker build -t app-final-curiosa:latest .
