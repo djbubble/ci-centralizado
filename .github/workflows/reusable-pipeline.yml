@@ -20,7 +20,7 @@ jobs:
           mvn sonar:sonar \
           -Dsonar.projectKey=mi-proyecto-final \
           -Dsonar.host.url=http://host.docker.internal:9000 \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
       - name: 4. Construir Imagen Docker
         run: |
