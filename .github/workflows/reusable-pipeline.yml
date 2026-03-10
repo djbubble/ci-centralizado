@@ -4,7 +4,7 @@ on:
   workflow_call:
     secrets:
       SONAR_TOKEN:
-        required: true # Esto obliga a que el secreto esté presente
+        required: true # Esto obliga a que el secreto esté presente y sea pasado por el Repo"X"
 
 jobs:
   build-and-analyze:
